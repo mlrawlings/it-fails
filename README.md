@@ -1,5 +1,7 @@
 # `it.fails()` - allow failing mocha tests
 
+[![Build Status](https://travis-ci.org/mlrawlings/it-fails.svg?branch=master)](https://travis-ci.org/mlrawlings/it-fails)
+
 ```
 npm install --save-dev it-fails
 ```
