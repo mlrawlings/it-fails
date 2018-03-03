@@ -153,40 +153,9 @@ function getErrorOutput(err) {
     if (err.uncaught) {
       msg = 'Uncaught ' + msg;
     }
-    // explicitly show diff
-    if (!exports.hideDiff && showDiff(err)) {
-      stringifyDiffObjs(err);
-      fmt = color('error title', '  %s) %s:\n%s') + color('error stack', '\n%s\n');
-      var match = message.match(/^([^:]+): expected/);
-      msg = '\n      ' + color('error message', match ? match[1] : msg);
-
-      if (exports.inlineDiffs) {
-        msg += inlineDiff(err);
-      } else {
-        msg += unifiedDiff(err);
-      }
-    }
 
     // indent stack trace
     stack = stack.replace(/^/gm, '  ');
 
     return { msg, stack };
 }
-
-
-function showDiff (err) {
-  return err && err.showDiff !== false && sameType(err.actual, err.expected) && err.expected !== undefined;
-}
-
-function stringifyDiffObjs (err) {
-  if (!utils.isString(err.actual) || !utils.isString(err.expected)) {
-    err.actual = utils.stringify(err.actual);
-    err.expected = utils.stringify(err.expected);
-  }
-}
-
-function sameType (a, b) {
-  return objToString.call(a) === objToString.call(b);
-}
-
-var objToString = Object.prototype.toString;
