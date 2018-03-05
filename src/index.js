@@ -1,3 +1,5 @@
+"use strict";
+
 const mocha = require('mocha');
 const it = mocha.it;
 
