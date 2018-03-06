@@ -40,3 +40,11 @@ it('unexpected-pass', async () => {
     expect(stdout).to.contain('1 unexpectedly passing');
     console.log(stdout);
 });
+
+it('multiple', async () => {
+    let { stdout, code } = await test('multiple/*.js');
+    expect(code).to.equal(0);
+    expect(stdout).to.contain('0 passing');
+    expect(stdout).to.contain('2 failing as expected');
+    console.log(stdout);
+});

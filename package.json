@@ -7,7 +7,8 @@
     "test": "nyc mocha test/index.js",
     "demo": "mocha test/fixtures/all.js || echo 'some tests failed'",
     "demo2": "mocha test/fixtures/expected-fail.js || echo 'some tests failed'",
-    "demo3": "mocha test/fixtures/unexpected-pass.js || echo 'some tests failed'"
+    "demo3": "mocha test/fixtures/unexpected-pass.js || echo 'some tests failed'",
+    "demo4": "mocha test/fixtures/multiple/*.js || echo 'some tests failed'"
   },
   "author": "Michael Rawlings <ml.rawlings@gmail.com>",
   "license": "MIT",
