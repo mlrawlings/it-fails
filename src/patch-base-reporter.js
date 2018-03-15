@@ -1,6 +1,8 @@
 const path = require('path');
 const mocha = require('mocha');
 const ms = require('mocha/lib/ms');
+const utils = require('mocha/lib/utils');
+const diff = require('diff');
 const Base = mocha.reporters.Base;
 const color = Base.color;
 const colors = Base.colors;
@@ -97,7 +99,7 @@ function writeTests(tests, detailsColor) {
 
         if (err) {
             try {
-            var errText = getErrorOutput(err);
+              var errText = getErrorOutput(err);
             } catch(e) {
                 console.log(e);
                 throw e;
@@ -154,8 +156,70 @@ function getErrorOutput(err) {
       msg = 'Uncaught ' + msg;
     }
 
+    if (showDiff(err)) {
+      stringifyDiffObjs(err);
+      fmt = color('error title', '  %s) %s:\n%s') + color('error stack', '\n%s\n');
+      var match = message.match(/^([^:]+): expected/);
+      msg = '\n      ' + color('error message', match ? match[1] : msg);
+      msg += unifiedDiff(err);
+    }
+
     // indent stack trace
     stack = stack.replace(/^/gm, '  ');
 
     return { msg, stack };
+}
+
+function unifiedDiff (err) {
+  var indent = '      ';
+  function cleanUp (line) {
+    if (line[0] === '+') {
+      return indent + colorLines('diff added', line);
+    }
+    if (line[0] === '-') {
+      return indent + colorLines('diff removed', line);
+    }
+    if (line.match(/@@/)) {
+      return '--';
+    }
+    if (line.match(/\\ No newline/)) {
+      return null;
+    }
+    return indent + line;
+  }
+  function notBlank (line) {
+    return typeof line !== 'undefined' && line !== null;
+  }
+  var msg = diff.createPatch('string', err.actual, err.expected);
+  var lines = msg.split('\n').splice(5);
+  return '\n      ' +
+    colorLines('diff added', '+ expected') + ' ' +
+    colorLines('diff removed', '- actual') +
+    '\n\n' +
+    lines.map(cleanUp).filter(notBlank).join('\n');
+}
+
+function colorLines (name, str) {
+  return str.split('\n').map(function (str) {
+    return color(name, str);
+  }).join('\n');
+}
+
+function stringifyDiffObjs (err) {
+  if (!utils.isString(err.actual) || !utils.isString(err.expected)) {
+    err.actual = utils.stringify(err.actual);
+    err.expected = utils.stringify(err.expected);
+  }
+}
+
+function showDiff (err) {
+  return err && err.showDiff !== false && sameType(err.actual, err.expected) && err.expected !== undefined;
+}
+
+function sameType (a, b) {
+  return objToString(a) === objToString(b);
+}
+
+function objToString(o) {
+  return Object.prototype.toString.call(o);
 }

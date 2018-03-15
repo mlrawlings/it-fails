@@ -8,7 +8,8 @@
     "demo": "mocha test/fixtures/all.js || echo 'some tests failed'",
     "demo2": "mocha test/fixtures/expected-fail.js || echo 'some tests failed'",
     "demo3": "mocha test/fixtures/unexpected-pass.js || echo 'some tests failed'",
-    "demo4": "mocha test/fixtures/multiple/*.js || echo 'some tests failed'"
+    "demo4": "mocha test/fixtures/multiple/*.js || echo 'some tests failed'",
+    "demo5": "mocha test/fixtures/expected-fail-assertion.js || echo 'some tests failed'"
   },
   "author": "Michael Rawlings <ml.rawlings@gmail.com>",
   "license": "MIT",
@@ -17,5 +18,8 @@
     "mocha": "^5.0.1",
     "node-run-cmd": "^1.0.1",
     "nyc": "^11.4.1"
+  },
+  "dependencies": {
+    "diff": "^3.5.0"
   }
 }
