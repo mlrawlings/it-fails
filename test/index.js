@@ -33,6 +33,16 @@ it('expected-fail', async () => {
     console.log(stdout);
 });
 
+it('expected-fail-assertion', async () => {
+    let { stdout, code } = await test('expected-fail-assertion.js');
+    expect(code).to.equal(0);
+    expect(stdout).to.contain('0 passing');
+    expect(stdout).to.contain('1 failing as expected');
+    expect(stdout).to.contain('-  "bar": 456');
+    expect(stdout).to.contain('+  "bar": 555');
+    console.log(stdout);
+});
+
 it('unexpected-pass', async () => {
     let { stdout, code } = await test('unexpected-pass.js');
     expect(code).to.equal(1);
