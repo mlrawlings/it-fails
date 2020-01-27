@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "nyc mocha test/index.js",
+    "test-all": "vertest",
     "demo": "mocha test/fixtures/all.js || echo 'some tests failed'",
     "demo2": "mocha test/fixtures/expected-fail.js || echo 'some tests failed'",
     "demo3": "mocha test/fixtures/unexpected-pass.js || echo 'some tests failed'",
@@ -17,7 +18,11 @@
     "chai": "^4.1.2",
     "mocha": "^7.0.1",
     "node-run-cmd": "^1.0.1",
-    "nyc": "^15.0.0"
+    "nyc": "^15.0.0",
+    "vertest": "^1.1.0"
+  },
+  "peerDependencies": {
+    "mocha": "^4 || ^5 || ^6 || ^7"
   },
   "dependencies": {
     "diff": "^3.5.0",
