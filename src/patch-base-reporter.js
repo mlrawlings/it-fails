@@ -1,6 +1,6 @@
 const path = require('path');
 const mocha = require('mocha');
-const ms = require('mocha/lib/ms');
+const ms = require('ms');
 const utils = require('mocha/lib/utils');
 const diff = require('diff');
 const Base = mocha.reporters.Base;
