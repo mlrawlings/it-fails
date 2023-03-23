@@ -15,6 +15,10 @@ const patchIt = (it) => it.fails = function() {
     return test;
 }
 
+if (globalThis.it) {
+    patchIt(globalThis.it);
+}
+
 patchIt(it);
 
 require('./patch-runner');
