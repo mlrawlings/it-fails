@@ -106,7 +106,7 @@ function writeTests(tests, detailsColor) {
             }
             console.log(color('error message', `     ${errText.msg}`));
             console.log(color('error stack', errText.stack));
-        } else {
+        } else if (test.file) {
             console.log(color('error stack', `     ${path.relative(process.cwd(), test.file)}`));
         }
         
